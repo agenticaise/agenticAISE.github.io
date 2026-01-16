@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Suggest an Update — Agentic AI in SE</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#fff; --ink:#1b1f2a; --muted:#5b6477;
+      --border:#e3e7f2; --accent:#2a57d6; --accent2:#1f2a44;
+      --shadow:0 10px 26px rgba(0,0,0,.08); --r:12px;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:var(--sans); background:var(--bg); color:var(--ink);}
+    .topbar{background:var(--accent2); color:#fff; padding:18px 16px;}
+    .wrap{max-width:950px; margin:0 auto;}
+    .nav{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;}
+    .brand{font-weight:800; letter-spacing:.2px}
+    .menu a{
+      display:inline-block; color:#fff; text-decoration:none;
+      padding:8px 10px; border:1px solid rgba(255,255,255,.18);
+      border-radius:999px; font-weight:700; font-size:.92rem;
+    }
+    .menu a.active{background:rgba(255,255,255,.14)}
+    main{padding:18px 16px 30px}
+    .card{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--r); box-shadow:var(--shadow);
+      padding:16px;
+    }
+    h1{margin:10px 0 6px; font-size: clamp(1.25rem,2.4vw,1.8rem)}
+    p{margin:8px 0; color:var(--muted); line-height:1.45}
+    .note{
+      background:#eef2ff; border-left:4px solid var(--accent);
+      padding:10px 12px; border-radius:10px; color:var(--ink);
+    }
+    label{display:block; margin:12px 0 6px; font-weight:800; font-size:.92rem}
+    input, select, textarea{
+      width:100%; padding:10px 10px; border-radius:10px;
+      border:1px solid var(--border); font-family:inherit; font-size:14px;
+      background:#fbfcff;
+    }
+    textarea{min-height:100px; resize:vertical}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 720px){ .row{grid-template-columns:1fr} }
+    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    button{
+      padding:10px 12px; border-radius:10px; border:1px solid var(--border);
+      font-weight:800; cursor:pointer; background:rgba(42,87,214,.12);
+    }
+    button.secondary{background:#f1f3fb}
+    .mono{font-family:var(--mono)}
+    .small{font-size:.9rem}
+    .hidden{display:none}
+    code{font-family:var(--mono)}
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <div class="brand">Agentic AI in SE — Living Repository</div>
+      <nav class="menu" aria-label="Main menu">
+        <a href="index.html">Repository</a>
+        <a class="active" href="suggest.html">Suggest an update</a>
+      </nav>
+    </div>
+    <div class="wrap">
+      <h1>Suggest an update</h1>
+      <p class="small" style="color:rgba(255,255,255,.85); margin:6px 0 0;">
+        Submissions are sent via your email client to <strong>agenticaise@gmail.com</strong> using a <code>mailto:</code> link.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="card">
+        <div class="note small">
+          <strong>Step 1:</strong> Choose whether you propose a <em>new agent type</em> or a <em>modification</em> of an existing one.
+          <br><strong>Step 2:</strong> Provide the proposed text + at least one citation/link and a short statement of what it supports.
+        </div>
+
+        <form id="f">
+          <label for="mode">What are you proposing?</label>
+          <select id="mode" required>
+            <option value="modify" selected>Modification of an existing agent type</option>
+            <option value="new">A new agent type</option>
+          </select>
+
+          <!-- Modify existing -->
+          <div id="modifyBlock">
+            <label for="agentExisting">Select agent type</label>
+            <select id="agentExisting">
+              <option>Passive & Questioning Agents</option>
+              <option>Passive & Team-member Agents</option>
+              <option>Reactive & Questioning Agents</option>
+              <option>Reactive & Team-member Agents</option>
+              <option>Reactive & Manager Agents</option>
+              <option>Proactive & Questioning Agents</option>
+              <option>Proactive & Team-member Agents</option>
+              <option>Proactive & Manager Agents</option>
+            </select>
+          </div>
+
+          <!-- New agent -->
+          <div id="newBlock" class="hidden">
+            <label for="agentNewName">Proposed new agent type name</label>
+            <input id="agentNewName" type="text" placeholder="e.g., Hybrid Proactive–Reactive & Team-member Agents" />
+
+            <div class="row">
+              <div>
+                <label for="proactivity">Proactivity</label>
+                <select id="proactivity">
+                  <option value="">—</option>
+                  <option>Passive</option>
+                  <option>Reactive</option>
+                  <option>Proactive</option>
+                  <option>Hybrid / Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="role">Role</label>
+                <select id="role">
+                  <option value="">—</option>
+                  <option>Questioning</option>
+                  <option>Team-member</option>
+                  <option>Manager</option>
+                  <option>Hybrid / Other</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="example">Example (optional)</label>
+            <textarea id="example" placeholder="Provide an example of this agent type (tool/system + what it does)."></textarea>
+          </div>
+
+          <label for="category">What are you adding/updating?</label>
+          <select id="category" required>
+            <option value="Benefits">Benefits (Improve)</option>
+            <option value="Risks">Risks (Lose)</option>
+            <option value="Changes">Changes</option>
+            <option value="All">All (benefits, risks, changes)</option>
+          </select>
+
+          <label for="content">Proposed content (bullet points or short paragraph)</label>
+          <textarea id="content" required placeholder="Write the new/updated content. Keep it concise and specific."></textarea>
+
+          <label for="evidence">Evidence (citation / DOI / URL) + what it supports</label>
+          <textarea id="evidence" required placeholder="Example: Author(s), Title, Venue, Year, DOI/URL. Support statement: This source reports X / argues Y."></textarea>
+
+          <div class="row">
+            <div>
+              <label for="name">Your name (optional)</label>
+              <input id="name" type="text" placeholder="Optional" />
+            </div>
+            <div>
+              <label for="contact">Contact (optional)</label>
+              <input id="contact" type="text" placeholder="Email or webpage (optional)" />
+            </div>
+          </div>
+
+          <div class="btnrow">
+            <button type="submit">Generate message</button>
+            <button type="button" class="secondary" id="send">Send by email</button>
+            <button type="button" class="secondary" id="clear">Clear</button>
+          </div>
+
+          <p class="small" style="margin-top:10px;">
+            Note: Browsers cannot send emails directly without a server. The “Send by email” button opens your default mail client.
+          </p>
+
+          <label for="out">Generated message</label>
+          <textarea id="out" class="mono" readonly placeholder="Click “Generate message” first."></textarea>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const mode = document.getElementById("mode");
+    const modifyBlock = document.getElementById("modifyBlock");
+    const newBlock = document.getElementById("newBlock");
+
+    const out = document.getElementById("out");
+
+    function syncMode(){
+      const m = mode.value;
+      if(m === "new"){
+        newBlock.classList.remove("hidden");
+        modifyBlock.classList.add("hidden");
+      }else{
+        modifyBlock.classList.remove("hidden");
+        newBlock.classList.add("hidden");
+      }
+    }
+    mode.addEventListener("change", syncMode);
+    syncMode();
+
+    document.getElementById("f").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const m = mode.value;
+      const cat = document.getElementById("category").value;
+      const content = document.getElementById("content").value.trim();
+      const evidence = document.getElementById("evidence").value.trim();
+      const name = (document.getElementById("name").value.trim() || "Anonymous");
+      const contact = document.getElementById("contact").value.trim();
+
+      let agentLine = "";
+      let extra = "";
+
+      if(m === "modify"){
+        const a = document.getElementById("agentExisting").value;
+        agentLine = "Agent type (existing): " + a;
+      }else{
+        const a = (document.getElementById("agentNewName").value.trim() || "[NEW AGENT TYPE NAME MISSING]");
+        const pro = document.getElementById("proactivity").value || "[not specified]";
+        const role = document.getElementById("role").value || "[not specified]";
+        const ex = document.getElementById("example").value.trim();
+        agentLine = "Agent type (new): " + a;
+        extra = "Proactivity: " + pro + "\nRole: " + role + (ex ? ("\nExample:\n" + ex) : "");
+      }
+
+      const lines = [];
+      lines.push("[Agentic AI in SE — Living Repository Update Request]");
+      lines.push("");
+      lines.push("Request: " + (m === "new" ? "Add new agent type" : "Modify existing agent type"));
+      lines.push(agentLine);
+      if(extra) { lines.push(extra); }
+      lines.push("");
+      lines.push("Category: " + cat);
+      lines.push("");
+      lines.push("Proposed content:");
+      lines.push(content || "[missing]");
+      lines.push("");
+      lines.push("Evidence & support statement:");
+      lines.push(evidence || "[missing]");
+      lines.push("");
+      lines.push("Submitted by: " + name + (contact ? " (" + contact + ")" : ""));
+
+      out.value = lines.join("\n");
+    });
+
+    document.getElementById("send").addEventListener("click", () => {
+      if(!out.value.trim()){
+        alert("Please click “Generate message” first.");
+        return;
+      }
+      const to = "agenticaise@gmail.com";
+      const subject = "[Agentic AI in SE] Repository update request";
+      const mailto = "mailto:" + encodeURIComponent(to)
+        + "?subject=" + encodeURIComponent(subject)
+        + "&body=" + encodeURIComponent(out.value);
+
+      window.location.href = mailto;
+    });
+
+    document.getElementById("clear").addEventListener("click", () => {
+      document.getElementById("f").reset();
+      out.value = "";
+      syncMode();
+    });
+  </script>
+</body>
+</html>
+

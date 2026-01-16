@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agentic AI in SE — Living Repository</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#fff; --ink:#1b1f2a; --muted:#5b6477;
+      --border:#e3e7f2; --accent:#2a57d6; --accent2:#1f2a44;
+      --shadow:0 10px 26px rgba(0,0,0,.08); --r:12px;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:var(--sans); background:var(--bg); color:var(--ink);}
+    .topbar{
+      background:var(--accent2); color:#fff; padding:18px 16px;
+    }
+    .wrap{max-width:1100px; margin:0 auto;}
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    }
+    .brand{font-weight:800; letter-spacing:.2px}
+    .menu a{
+      display:inline-block; color:#fff; text-decoration:none;
+      padding:8px 10px; border:1px solid rgba(255,255,255,.18);
+      border-radius:999px; font-weight:700; font-size:.92rem;
+    }
+    .menu a.active{background:rgba(255,255,255,.14)}
+    main{padding:18px 16px 30px}
+    .grid{display:grid; grid-template-columns:1fr; gap:14px}
+    .card{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--r); box-shadow:var(--shadow);
+      padding:16px;
+    }
+    h1{margin:10px 0 6px; font-size: clamp(1.25rem,2.4vw,1.8rem)}
+    h2{margin:0 0 10px; font-size:1.1rem}
+    p{margin:8px 0; color:var(--muted); line-height:1.45}
+    .note{
+      background:#eef2ff; border-left:4px solid var(--accent);
+      padding:10px 12px; border-radius:10px; color:var(--ink);
+    }
+    .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .pill{
+      padding:6px 10px; border:1px solid var(--border);
+      background:#fafbff; color:var(--muted);
+      border-radius:999px; font-size:.86rem; font-weight:650;
+    }
+
+    details{
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:10px 12px;
+      background:#fbfcff;
+      margin:10px 0;
+    }
+    summary{cursor:pointer; font-weight:800}
+    .meta{margin-top:8px; display:flex; gap:8px; flex-wrap:wrap}
+    .tag{
+      border:1px solid var(--border); background:#fff;
+      border-radius:999px; padding:4px 9px; font-size:.8rem; color:var(--muted);
+    }
+    .k{margin:10px 0 6px; font-weight:900; font-size:.92rem}
+    ul{margin:6px 0 0 18px; color:var(--muted); line-height:1.45}
+    .small{font-size:.9rem}
+    footer{padding:0 16px 20px; color:var(--muted); font-size:.9rem}
+    
+    /* ---------- Print / PDF friendly stylesheet ---------- */
+    @media print {
+      @page { margin: 16mm; }
+
+      /* Remove background ink and shadows */
+      body { background: #fff !important; color: #000 !important; }
+      .topbar { background: #fff !important; color: #000 !important; padding: 0 !important; }
+      .topbar .menu, .topbar .brand { display: none !important; } /* hide nav for appendix */
+      a { color: #000 !important; text-decoration: underline !important; }
+
+      /* Layout: single column */
+      main, .wrap, .grid { max-width: none !important; }
+      .grid { gap: 10mm !important; }
+      .card { box-shadow: none !important; border: 1px solid #bbb !important; break-inside: avoid; page-break-inside: avoid; }
+
+      /* Typography */
+      h1, h2 { color: #000 !important; }
+      p, li { color: #000 !important; font-size: 11pt !important; line-height: 1.35 !important; }
+      .pillrow, .pill { display: none !important; } /* remove UI chips */
+      .note { background: #fff !important; border-left: 3px solid #000 !important; }
+
+      /* Expand all details so content is visible in PDF */
+      details { border: 1px solid #bbb !important; background: #fff !important; }
+      details > summary { list-style: none; }
+      details > summary::-webkit-details-marker { display: none; }
+      details[open] > summary { margin-bottom: 2mm; }
+      details:not([open]) > summary { margin-bottom: 2mm; }
+
+      /* Force show content of closed details during print */
+      details { display: block !important; }
+      details > * { display: block !important; }
+      summary { font-weight: 700 !important; font-size: 12pt !important; }
+
+      /* Show link URLs after anchor text for traceability */
+      a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        word-break: break-all;
+      }
+
+      /* Avoid awkward breaks */
+      ul { break-inside: avoid; page-break-inside: avoid; }
+      details { break-inside: avoid; page-break-inside: avoid; }
+    }
+
+  </style>
+  
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <div class="brand">Agentic AI in SE — Living Repository</div>
+          <nav class="menu" aria-label="Main menu">
+            <a class="active" href="index.html">Repository</a>
+            <a href="suggest.html">Suggest an update</a>
+            <a href="#" id="printBtn" onclick="window.print(); return false;">Print / Save to PDF</a>
+          </nav>
+    </div>
+    <div class="wrap">
+      <h1>Risks, benefits, and changes of agentic AI in Software Engineering</h1>
+      <p class="small" style="color:rgba(255,255,255,.85); margin:6px 0 0;">
+        Related to: <strong>Beatrice Melis, Donatella Donati, Marco Autili, Paola Inverardi, Patrizio Pelliccione</strong>,
+        <em>Agentic AI in Software Engineering: tools or team members?</em>, ACM Transactions on Software Engineering and Methodology (TOSEM), 2026.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap grid">
+
+      <section class="card">
+        <h2>Goal of this living repository</h2>
+        <p>
+          This page summarizes a taxonomy of Agentic AI in Software Engineering along two dimensions:
+          <strong>proactivity</strong> (Passive, Reactive, Proactive) and <strong>interaction role</strong>
+          (Questioning, Team-member, Manager). For each category, it provides a curated view of expected
+          <strong>benefits</strong>, <strong>risks</strong>, and <strong>changes</strong> to SE practice.
+        </p>
+        <p>
+          The repository is intended to be “living”: as new evidence emerges (research results, industrial reports, case studies),
+          the community can propose updates or additions via the companion “Suggest an update” page.
+        </p>
+        <div class="pillrow">
+          <span class="pill">Passive / Reactive / Proactive</span>
+          <span class="pill">Questioning / Team-member / Manager</span>
+          <span class="pill">Benefits / Risks / Changes</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Agent types (from Table 1) — meaning + examples</h2>
+        <div class="note small">
+          The examples below are taken from the paper’s Table 1 (“Classification of Agentic AI by behavioral capabilities and organizational role”)
+          and are meant as illustrative instantiations.
+        </div>
+
+        <!-- Passive -->
+        <details open>
+          <summary>Passive & Questioning Agents</summary>
+          <div class="meta"><span class="tag">Passive</span><span class="tag">Questioning</span></div>
+          <p class="small">
+            Execute user commands or hardcoded behavior when invoked and engage in interaction with humans to provide a better service.
+          </p>
+          <p class="small"><strong>Example:</strong> Code or documentation generators that establish a dialogue to better fit user needs.</p>
+        </details>
+
+        <details>
+          <summary>Passive & Team-member Agents</summary>
+          <div class="meta"><span class="tag">Passive</span><span class="tag">Team-member</span></div>
+          <p class="small">
+            Execute user commands when invoked, and can understand and engage in complex social and interpersonal dynamics of a human team.
+          </p>
+          <p class="small"><strong>Example:</strong> Passive support agents triggered to clarify requirements or summarize discussions, adapting communication to team needs without acting autonomously.</p>
+        </details>
+
+        <details>
+          <summary>Passive & Manager Agents</summary>
+          <div class="meta"><span class="tag">Passive</span><span class="tag">Manager</span></div>
+          <p class="small">
+            <strong>Not applicable</strong> in the taxonomy: managerial roles require initiative beyond passive, on-demand interaction.
+          </p>
+        </details>
+
+        <!-- Reactive -->
+        <details>
+          <summary>Reactive & Questioning Agents</summary>
+          <div class="meta"><span class="tag">Reactive</span><span class="tag">Questioning</span></div>
+          <p class="small">
+            Respond to environmental stimuli using predefined rules or behaviors, engaging with humans to provide a better service.
+          </p>
+          <p class="small"><strong>Example:</strong> Reactive CI agents monitoring repository events/build results and applying predefined policies to adjust configurations or trigger corrective actions.</p>
+        </details>
+
+        <details>
+          <summary>Reactive & Team-member Agents</summary>
+          <div class="meta"><span class="tag">Reactive</span><span class="tag">Team-member</span></div>
+          <p class="small">
+            Interactive collaborators that respond to stimuli, ask clarifications, and react to team needs through context-aware communication.
+          </p>
+          <p class="small"><strong>Example:</strong> Requirements engineering agents monitoring discussions/issue trackers and reacting to changes by asking clarifying questions and identifying ambiguities or conflicts.</p>
+        </details>
+
+        <details>
+          <summary>Reactive & Manager Agents</summary>
+          <div class="meta"><span class="tag">Reactive</span><span class="tag">Manager</span></div>
+          <p class="small">
+            Supervisory agents that respond to stimuli by assigning tasks, monitoring progress, and reacting to project events.
+          </p>
+          <p class="small"><strong>Example:</strong> Coordination agents that detect delayed tasks/failing builds and reallocate tasks, update sprint plans, notify team members, and escalate issues when needed.</p>
+        </details>
+
+        <!-- Proactive -->
+        <details>
+          <summary>Proactive & Questioning Agents</summary>
+          <div class="meta"><span class="tag">Proactive</span><span class="tag">Questioning</span></div>
+          <p class="small">
+            Autonomous agents that observe, plan, and act without explicit triggers; they can also ask clarifying questions when uncertainty arises.
+          </p>
+          <p class="small"><strong>Example:</strong> Self-adaptive testing agents that continuously monitor changes and autonomously adapt testing strategies, generating/modifying tests and querying developers when needed.</p>
+        </details>
+
+        <details>
+          <summary>Proactive & Team-member Agents</summary>
+          <div class="meta"><span class="tag">Proactive</span><span class="tag">Team-member</span></div>
+          <p class="small">
+            Fully autonomous teammates that proactively collaborate, adapt to context, and support shared team goals through continuous contributions.
+          </p>
+          <p class="small"><strong>Example:</strong> Autonomous development partners that monitor repositories/issues/docs and propose design alternatives, contribute code/tests, update documentation, and initiate discussions to align decisions.</p>
+        </details>
+
+        <details>
+          <summary>Proactive & Manager Agents</summary>
+          <div class="meta"><span class="tag">Proactive</span><span class="tag">Manager</span></div>
+          <p class="small">
+            Advanced manager agents that plan, coordinate, allocate resources, oversee quality, and manage projects end-to-end.
+          </p>
+          <p class="small"><strong>Example:</strong> Project management agents integrating issue trackers/VCS/CI/testing/comms to plan iterations, assign/reassign tasks, enforce standards, monitor quality signals, and coordinate releases with escalation to humans.</p>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>Risks, benefits, and changes (from Tables 2–4)</h2>
+        <div class="note small">
+          The lists below summarize the paper’s findings for the eight applicable agent types
+          (Passive Manager is not applicable).
+        </div>
+
+        <!-- Passive & Questioning -->
+        <details open>
+          <summary>Passive & Questioning Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Passive</span><span class="tag">Questioning</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Productivity enhancement (time saving, faster improvements in code quality) via on-demand support and micro-level reasoning.</li>
+            <li>Accessibility for novice/less expert engineers; support for learning and skill acquisition; continuous learning and knowledge exchange.</li>
+            <li>Increased motivation, reduced programming anxiety, improved performance; perceived satisfaction and well-being via emotional support.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Over-reliance; erosion of independent reasoning/diagnostic skills; superficial learning.</li>
+            <li>Erroneous outputs leading to incorrect learning or no learning.</li>
+            <li>Security and IP risks, bias, data security issues; potential decrease in code quality/maintainability; operational and energy costs.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Education must prepare learners to engage with diverse agent types.</li>
+            <li>Shift toward AI-mediated inquiry/dialogic interaction; increased emphasis on high-level design decisions remaining with humans.</li>
+            <li>Requirements engineering toward prompts; new practices to verify/measure auditability, accountability, fairness, transparency.</li>
+          </ul>
+        </details>
+
+        <!-- Passive & Team-member -->
+        <details>
+          <summary>Passive & Team-member Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Passive</span><span class="tag">Team-member</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Contextual assistance in collaboration when explicitly requested; clarification/synthesis for shared understanding.</li>
+            <li>Mediation across disciplines enhancing inclusivity, efficiency, and creativity.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Loss of review culture; misalignment with team practices and conventions.</li>
+            <li>Mediation risks: misunderstandings/oversimplifications or propagation of misinformation.</li>
+            <li>Reduced internalization of knowledge and weaker peer-to-peer learning if team sense-making is delegated to the agent.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Need to train engineers to work with Agentic AI as colleagues (and potentially managers).</li>
+            <li>Changes in learning-by-doing and debugging cultures.</li>
+          </ul>
+        </details>
+
+        <!-- Reactive & Questioning -->
+        <details>
+          <summary>Reactive & Questioning Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Reactive</span><span class="tag">Questioning</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Event-triggered support for inquiry/reasoning tasks; responsiveness and contextual learning at critical moments.</li>
+            <li>Enables refocus on creative/strategic work; acts as glue between repos/APIs/databases via orchestration; helps maintain shared understanding.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Deferral of reasoning until agent intervention; reinforcement of passive cognitive patterns and skill atrophy.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Emergence of event-driven AI support in workflows; agents as integration points for reactive coordination/orchestration.</li>
+          </ul>
+        </details>
+
+        <!-- Reactive & Team-member -->
+        <details>
+          <summary>Reactive & Team-member Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Reactive</span><span class="tag">Team-member</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Event-driven coordination within socio-technical teams; mediation across roles/disciplines.</li>
+            <li>Reduced collaboration breakdowns; enhanced emotional well-being; refocus on creative work.</li>
+            <li>Collaborative debugging support: accelerates optimization and error correction.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Erosion of human-centered collaboration (empathy, informal communication, mentoring) and challenges to sustaining expertise.</li>
+            <li>Marginalization of socially complex debugging; reduced knowledge sharing and situational awareness; increased social/productivity pressure.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Transformation of interaction and information sharing; reduced reliance on traditional learning practices.</li>
+            <li>Need for explicit shared mental models due to reduced situational awareness.</li>
+          </ul>
+        </details>
+
+        <!-- Reactive & Manager -->
+        <details>
+          <summary>Reactive & Manager Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Reactive</span><span class="tag">Manager</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Improved coordination/alignment across teams; cross-disciplinary mediation and operational flow management.</li>
+            <li>Efficiency gains through workload redistribution, freeing developers from routine work while shifting oversight burdens.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Surveillance, performance benchmarking, and pressure to conform to machine-driven standards.</li>
+            <li>Fairness/merit attribution issues; potential inequalities/injustice; reduced situational awareness due to insufficient explainability.</li>
+            <li>Accountability risks from AI-mediated managerial reactions and responsibility gaps.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Reorganization of managerial practices toward AI-assisted orchestration; training to work under AI management.</li>
+            <li>Restructuring merit/work distribution (e.g., rewarding systems); need accountability, governance, and explainability frameworks.</li>
+          </ul>
+        </details>
+
+        <!-- Proactive & Questioning -->
+        <details>
+          <summary>Proactive & Questioning Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Proactive</span><span class="tag">Questioning</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Support inquiry and anticipatory clarification; early intervention before breakdowns.</li>
+            <li>Contextual learning at critical moments; sustained cognitive/creative support; orchestration across tools/artifacts; supports shared understanding.</li>
+            <li>Particularly valuable for novices: enables learning and reduces stress.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Marginalization of trial-and-error and reflective learning; passive acceptance of solutions.</li>
+            <li>Skill atrophy and reduced sense-making via over-automation; unclear responsibility for agent-initiated actions.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Acceleration toward AI-driven inquiry workflows; stronger reliance on orchestration and prompt-based interaction.</li>
+            <li>Need for human-centered governance instruments and robustness practices.</li>
+          </ul>
+        </details>
+
+        <!-- Proactive & Team-member -->
+        <details>
+          <summary>Proactive & Team-member Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Proactive</span><span class="tag">Team-member</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>Socio-technical coordination and mediation; emotional well-being; collective learning and creative focus.</li>
+            <li>Improved knowledge sharing/documentation; can foster focused strategic discussions.</li>
+            <li>Tutoring and reflective partnering for novices/professionals.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Erosion of human-centered collaboration; loss of collective sense-making and cultural transmission.</li>
+            <li>Over-reliance/deskilling; loss of care structures and emotional support; alienation; increased productivity pressure; diluted responsibility.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Shift toward teaching how to work with agentic colleagues; human–AI pairing revitalizes pair programming.</li>
+            <li>Conversational interaction models; transformed learning practices; explicit shared mental models become more important.</li>
+          </ul>
+        </details>
+
+        <!-- Proactive & Manager -->
+        <details>
+          <summary>Proactive & Manager Agents — Benefits / Risks / Changes</summary>
+          <div class="meta"><span class="tag">Proactive</span><span class="tag">Manager</span></div>
+
+          <div class="k">Benefits (Improve)</div>
+          <ul>
+            <li>End-to-end planning/coordination; proactive task and resource allocation; early detection of inefficiencies.</li>
+            <li>Improves communication/coordination among humans; efficiency via workload redistribution.</li>
+          </ul>
+
+          <div class="k">Risks (Lose)</div>
+          <ul>
+            <li>Surveillance and productivity pressure; fairness/merit attribution concerns.</li>
+            <li>Opacity reducing situational awareness; accountability risks and responsibility gaps.</li>
+          </ul>
+
+          <div class="k">Changes</div>
+          <ul>
+            <li>Reorganization toward AI-assisted orchestration; training to work under AI management.</li>
+            <li>Restructuring merit/reward systems; explicit governance, transparency, limits, and human oversight.</li>
+          </ul>
+        </details>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="wrap">
+    <p>
+      Want to propose an update or a new agent type? Use the <a href="suggest.html">Suggest an update</a> page.
+    </p>
+  </footer>
+  <script>
+    // Ensure details are open before printing for consistent PDF output
+    window.addEventListener("beforeprint", () => {
+      document.querySelectorAll("details").forEach(d => d.open = true);
+    });
+  </script>
+
+</body>
+</html>
+
