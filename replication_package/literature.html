@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Replication — Literature Review</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">Replication Package</a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a class="active" href="literature.html">Literature review</a>
+        <a href="interviews.html">Expert interviews</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>Replication of the literature review</h1>
+      <p class="lead">
+        This page documents the Scopus search strategy, screening steps, and data files used to identify
+        secondary studies on Agentic AI in Software Engineering.
+      </p>
+
+      <section class="card">
+        <span class="pill">Search protocol</span>
+        <div class="grid two">
+          <div>
+            <h2>Scopus query</h2>
+            <p class="small">
+              Source: <strong>Scopus</strong>. Search scope: <strong>metadata + entire paper</strong>.
+            </p>
+            <h3>Search string</h3>
+            <pre>( "agentic AI" OR "AI agents" OR "autonomous agents" OR "software agents" )
+AND ( "software engineering" )
+AND ( taxonomy OR survey OR "secondary study" OR review OR "mapping study" OR "empirical study" )</pre>
+            <p class="small" style="margin-top:10px">
+              Exact exported Scopus query:
+              <a href="data/searchString.pdf" download><strong>searchString.pdf</strong></a>
+            </p>
+          </div>
+
+          <div>
+            <h2>Rationale & filters</h2>
+            <ul>
+              <li>
+                <strong>Terminology coverage:</strong> we included multiple terms (agentic AI, AI agents,
+                autonomous agents, software agents) to capture how the topic is discussed across SE literature.
+              </li>
+              <li>
+                <strong>Study types:</strong> we focused on synthesis-oriented evidence (taxonomies, surveys,
+                reviews, mapping studies, and related secondary studies).
+              </li>
+              <li><strong>Time window:</strong> papers published after <strong>2023</strong>.</li>
+              <li>
+                <strong>Discipline filter:</strong> Computer Science / AI journals and conferences.
+              </li>
+            </ul>
+            <p style="margin-top:10px" class="small">
+              After filters, Scopus returned <strong>233</strong> papers (see <code>CompleteList.csv</code>).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="pill">Selection flow</span>
+        <h2>From 233 to 11 studies</h2>
+        <h3>Step 1 — Initial retrieval</h3>
+        <p class="small">233 papers after filters → <code>CompleteList.csv</code>.</p>
+
+        <h3>Step 2 — Title screening</h3>
+        <p class="small">First pruning by title → 28 papers → <code>28Selected.csv</code>.</p>
+
+        <h3>Step 3 — Full-text eligibility check</h3>
+        <ul>
+          <li><strong>Include:</strong> secondary studies on Agentic AI in SE.</li>
+          <li><strong>Exclude:</strong> papers not focused on SE activities/tasks.</li>
+        </ul>
+        <p class="small">Result: 7 papers → <code>FinalList_scopus.csv</code>.</p>
+
+        <h3>Step 4 — Snowballing</h3>
+        <p class="small">Added 2 papers → <code>FinalList_scopusPlusSnowballing.csv</code>.</p>
+
+        <h3>Step 5 — Targeted venue check (SE2030)</h3>
+        <p class="small">
+          Checked ACM TOSEM “2030 Roadmap for Software Engineering” special issue (Vol. 34, Iss. 5, 2025);
+          added 2 papers.
+        </p>
+        <p class="small">
+          Final set: 11 papers → <code>FinalList_scopusPlusSnowballingPlusSE2030.csv</code>.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="pill">Files</span>
+        <h2>Downloadable data</h2>
+        <ul class="filelist">
+          <li><a href="data/CompleteList.csv" download target="empty">CompleteList.csv</a> — Scopus results after filters (n=233).</li>
+          <li><a href="data/28Selected.csv" download target="empty">28Selected.csv</a> — Title-screened subset (n=28).</li>
+          <li><a href="data/FinalList_scopus.csv" download target="empty">FinalList_scopus.csv</a> — Eligible set (n=7).</li>
+          <li><a href="data/FinalList_scopusPlusSnowballing.csv" download target="empty">FinalList_scopusPlusSnowballing.csv</a> — After snowballing (n=9).</li>
+          <li><a href="data/FinalList_scopusPlusSnowballingPlusSE2030.csv" download target="empty">FinalList_scopusPlusSnowballingPlusSE2030.csv</a> — Final set (n=11).</li>
+          <li><a href="data/searchString.pdf" download target="empty">searchString.pdf</a> — Exported Scopus query (exact string).</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>Replication package — Literature review</div>
+      <div>Agentic AI in Software Engineering</div>
+    </div>
+  </footer>
+</body>
+</html>
