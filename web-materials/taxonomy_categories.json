@@ -1,0 +1,18 @@
+{
+  "dimensions": {
+    "proactivity": ["Passive", "Reactive", "Proactive"],
+    "organizational_role": ["Questioning", "Team-member", "Manager"]
+  },
+  "categories": [
+    {"proactivity":"Passive", "role":"Questioning", "status":"applicable", "description":"Answers, explains, or challenges a developer request."},
+    {"proactivity":"Passive", "role":"Team-member", "status":"excluded", "description":"Not applicable in the final taxonomy: team membership requires at least event-driven participation in shared work."},
+    {"proactivity":"Passive", "role":"Manager", "status":"excluded", "description":"Not applicable: managerial work requires at least event-driven initiative."},
+    {"proactivity":"Reactive", "role":"Questioning", "status":"applicable", "description":"Raises questions in response to observed events such as failed builds or ambiguous requirements."},
+    {"proactivity":"Reactive", "role":"Team-member", "status":"applicable", "description":"Coordinates with humans when repository, issue-tracker, CI, or other workflow events occur."},
+    {"proactivity":"Reactive", "role":"Manager", "status":"applicable", "description":"Supervises predefined workflows by reacting to project events."},
+    {"proactivity":"Proactive", "role":"Questioning", "status":"applicable", "description":"Initiates clarification or challenge before being asked."},
+    {"proactivity":"Proactive", "role":"Team-member", "status":"applicable", "description":"Acts as an autonomous development partner monitoring artifacts, proposing changes, and coordinating with humans."},
+    {"proactivity":"Proactive", "role":"Manager", "status":"applicable", "description":"Plans, prioritizes, allocates resources, and monitors quality under governance constraints."}
+  ],
+  "refinement_note": "Passive Team-member was included as an initial boundary case but removed after expert feedback. The final taxonomy treats passive on-demand support as tool use rather than team membership."
+}

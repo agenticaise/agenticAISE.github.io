@@ -1,0 +1,16 @@
+{
+  "total_unique_sources_cited_in_extended_tetrad": 112,
+  "unique_sources_by_dimension": {
+    "Enhances": 32,
+    "Obsolesces": 28,
+    "Retrieves": 27,
+    "Reverses": 62
+  },
+  "source_type_counts": {
+    "Academic literature": 93,
+    "Book/theoretical source": 6,
+    "Industry/practitioner/community source": 11,
+    "Other supporting source": 2
+  },
+  "note": "Counts are based on references cited in the extended McLuhan Tetrad construction section of the long manuscript. The 11-paper scoping corpus from Iteration 1 is complemented by a broader source base for the Tetrad construction."
+}
